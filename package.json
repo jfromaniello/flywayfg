@@ -1,0 +1,14 @@
+{
+  "name": "flywayfg",
+  "version": "1.0.0",
+  "description": "",
+  "bin": "bin/flywayfg",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "José F. Romaniello <jfromaniello@gmail.com> (https://joseoncode.com)",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^16.0.4-candidate.0"
+  }
+}

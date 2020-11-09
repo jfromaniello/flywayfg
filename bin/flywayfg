@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+const yargs = require('yargs/yargs');
+const path = require('path');
+const fs = require('fs');
+
+const options = yargs(process.argv)
+  .option('directory', {
+    alias: 'd',
+    type: 'string',
+    requiresArg: true,
+    demandOption: true,
+    description: 'The path to the directory containing the migration files'
+  })
+  .option('padding', {
+    alias: 'p',
+    type: 'number',
+    requiresArg: true,
+    description: 'The number of zeros to pad',
+    default: 3
+  })
+  .option('title', {
+    alias: 't',
+    type: 'string',
+    requiresArg: true,
+    demandOption: true,
+    description: 'The title for the migration'
+  })
+  .argv
+
+
+
+
+function getNumberVersion() {
+  const currentMigrations = fs.readdirSync(options.directory);
+  const r = currentMigrations
+    .map(f => f.replace(/^v/i, '').replace(/__.*$/, ''))
+    .map(n => parseInt(n))
+    .sort()
+    .reverse();
+  return r.length > 0 ? r[0] + 1 : 1;
+}
+
+function touch(fullPath) {
+  fs.closeSync(fs.openSync(fullPath, 'w'));
+}
+
+const next = getNumberVersion();
+const fileName = `V${next.toString().padStart(options.padding, '0')}__${options.title.replace(/\s/g, '_')}.sql`;
+const fullPath = path.join(options.directory, fileName);
+
+touch(fullPath);
+
+console.log(`created migration file in: ${fullPath}`);
