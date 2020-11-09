@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "bin": "bin/flywayfg",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/jfromaniello/flywayfg.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
